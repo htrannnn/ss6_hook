@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import StudentItem from "./StudentItem";
 import { getAllStudent } from "../services/studentService";
 import AddStudent from "./AddStudent";
+import DeleteStudent from "./DeleteStudent";
 
 function StudentList() {
 	const [studentList, setStudentList] = useState([]);
+	const [show, setShow] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	//isLoading khởi tạo với giá trị mặc định là False
 
@@ -13,6 +15,15 @@ function StudentList() {
 	};
 	//hàm này được gọi để thay đổi trạng thái của isLoading để đồng bộ giao diện với dữ liệu
 	//setIsLoading nhận vào một callback function, trong đó: prevState nhận về giá trị hiện tại của isLoading: false, lật ngược lại sang true và ngược lại.
+
+	const showModalDelete = (student) => {
+		setShow(true);
+		console.log(student);
+	};
+
+	const closeModal = () => {
+		setShow(false);
+	};
 
 	useEffect(() => {
 		setStudentList(getAllStudent());
@@ -38,10 +49,11 @@ function StudentList() {
 						</thead>
 						<tbody>
 							{studentList.map((student) => (
-								<StudentItem key={student.name} student={student} />
+								<StudentItem key={student.name} student={student} showModalDelete={showModalDelete} />
 							))}
 						</tbody>
 					</table>
+					<DeleteStudent show={show} closeModal={closeModal} />
 				</div>
 			</div>
 		</div>

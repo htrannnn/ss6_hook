@@ -23,3 +23,12 @@ export function getAllStudent() {
 export function addNewStudent(student) {
 	studentList.push(student);
 }
+
+export function deleteByName(name) {
+	for (let i = 0; i < studentList.length; i++) {
+		if (studentList[i].name === name) {
+			studentList.splice(i, 1);
+			break;
+		}
+	}
+}
