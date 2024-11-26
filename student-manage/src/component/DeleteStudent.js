@@ -4,7 +4,11 @@ import Modal from "react-bootstrap/Modal";
 
 function DeleteStudent(props) {
 	const handleClose = () => {
-		props.closeModal();
+		props.closeModal([]);
+	};
+
+	const handleDeleteStudent = (student) => {
+		props.showDeleteStudent(student);
 	};
 
 	return (
@@ -13,13 +17,13 @@ function DeleteStudent(props) {
 				<Modal.Header closeButton>
 					<Modal.Title>Modal heading</Modal.Title>
 				</Modal.Header>
-				<Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+				<Modal.Body>Bạn có muốn xóa học viên này không?</Modal.Body>
 				<Modal.Footer>
 					<Button variant="secondary" onClick={handleClose}>
-						Close
+						Đóng
 					</Button>
-					<Button variant="primary" onClick={handleClose}>
-						Save Changes
+					<Button variant="danger" onClick={() => props.deleteStudent(props.student)}>
+						Xóa
 					</Button>
 				</Modal.Footer>
 			</Modal>

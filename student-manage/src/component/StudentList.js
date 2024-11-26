@@ -6,9 +6,11 @@ import DeleteStudent from "./DeleteStudent";
 
 function StudentList() {
 	const [studentList, setStudentList] = useState([]);
-	const [show, setShow] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	//isLoading khởi tạo với giá trị mặc định là False
+
+	const [show, setShow] = useState(false);
+	const [selectedStudent, setSelectedStudent] = useState();
 
 	const handleIsLoading = () => {
 		setIsLoading((prevState) => !prevState);
@@ -18,11 +20,17 @@ function StudentList() {
 
 	const showModalDelete = (student) => {
 		setShow(true);
+		setSelectedStudent();
 		console.log(student);
 	};
 
 	const closeModal = () => {
 		setShow(false);
+		setSelectedStudent();
+	};
+
+	const deleteStudent = (student) => {
+		setStudentList((previousList) => previousList.filter((students) => students.name !== student.name));
 	};
 
 	useEffect(() => {
@@ -53,7 +61,7 @@ function StudentList() {
 							))}
 						</tbody>
 					</table>
-					<DeleteStudent show={show} closeModal={closeModal} />
+					<DeleteStudent show={show} closeModal={closeModal} deleteStudent={deleteStudent} student={selectedStudent} />
 				</div>
 			</div>
 		</div>
