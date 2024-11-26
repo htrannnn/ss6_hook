@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 function StudentItem(props) {
-	const { name, phone, email } = props.student;
+	const { id, name, phone, email } = props.student;
 	const { deleteStudent, setDeleteStudent } = useState();
 
 	const handleShowModal = (student) => {
@@ -9,11 +9,12 @@ function StudentItem(props) {
 	};
 
 	const showDeleteStudent = (student) => {
-		setDeleteStudent((prevList) => prevList.filter((students) => students.name !== student.name));
+		setDeleteStudent((previousList) => previousList.filter((students) => students.id !== student.id));
 	};
 
 	return (
 		<tr>
+			<td>{id}</td>
 			<td>{name}</td>
 			<td>{phone}</td>
 			<td>{email}</td>

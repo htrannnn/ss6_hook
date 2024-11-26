@@ -9,6 +9,11 @@ function StudentList() {
 	const [isLoading, setIsLoading] = useState(false);
 	//isLoading khởi tạo với giá trị mặc định là False
 
+	useEffect(() => {
+		setStudentList(getAllStudent());
+	}, [isLoading]);
+	//effect chỉ chạy khi isLoading được cập nhật. Chạy: cập nhật lại danh sách getAllStudent khi isLoading được cập nhật
+
 	const [show, setShow] = useState(false);
 	const [selectedStudent, setSelectedStudent] = useState();
 
@@ -20,7 +25,7 @@ function StudentList() {
 
 	const showModalDelete = (student) => {
 		setShow(true);
-		setSelectedStudent();
+		setSelectedStudent(student);
 		console.log(student);
 	};
 
@@ -30,13 +35,9 @@ function StudentList() {
 	};
 
 	const deleteStudent = (student) => {
-		setStudentList((previousList) => previousList.filter((students) => students.name !== student.name));
+		console.log(student);
+		setStudentList((previousList) => previousList.filter((students) => students.id !== student.id));
 	};
-
-	useEffect(() => {
-		setStudentList(getAllStudent());
-	}, [isLoading]);
-	//effect chỉ chạy khi isLoading được cập nhật. Chạy: cập nhật lại danh sách getAllStudent khi isLoading được cập nhật
 
 	return (
 		<div className="container">
@@ -49,6 +50,7 @@ function StudentList() {
 					<table className="table table-striped table-secondary">
 						<thead>
 							<tr>
+								<th>ID</th>
 								<th>Name</th>
 								<th>Phone</th>
 								<th>Email</th>
@@ -57,7 +59,7 @@ function StudentList() {
 						</thead>
 						<tbody>
 							{studentList.map((student) => (
-								<StudentItem key={student.name} student={student} showModalDelete={showModalDelete} />
+								<StudentItem key={student.id} student={student} showModalDelete={showModalDelete} />
 							))}
 						</tbody>
 					</table>
