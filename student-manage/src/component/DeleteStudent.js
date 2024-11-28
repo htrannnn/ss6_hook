@@ -3,26 +3,18 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 function DeleteStudent(props) {
-	const handleClose = () => {
-		props.closeModal([]);
-	};
-
-	const handleDeleteStudent = (student) => {
-		props.showDeleteStudent(student);
-	};
-
 	return (
 		<>
-			<Modal show={props.show} onHide={handleClose}>
+			<Modal show={props.show} onHide={props.closeModal}>
 				<Modal.Header closeButton>
 					<Modal.Title>Modal heading</Modal.Title>
 				</Modal.Header>
-				<Modal.Body>Bạn có muốn xóa học viên này không?</Modal.Body>
+				<Modal.Body>Bạn có muốn xóa học viên {props.student.name} không?</Modal.Body>
 				<Modal.Footer>
-					<Button variant="secondary" onClick={handleClose}>
+					<Button variant="secondary" onClick={props.closeModal}>
 						Đóng
 					</Button>
-					<Button variant="danger" onClick={() => props.deleteStudent(props.student)}>
+					<Button variant="danger" onClick={props.deleteStudent}>
 						Xóa
 					</Button>
 				</Modal.Footer>

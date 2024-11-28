@@ -1,16 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 
 function StudentItem(props) {
 	const { id, name, phone, email } = props.student;
-	const { deleteStudent, setDeleteStudent } = useState();
-
-	const handleShowModal = (student) => {
-		props.showModalDelete(student);
-	};
-
-	const showDeleteStudent = (student) => {
-		setDeleteStudent((previousList) => previousList.filter((students) => students.id !== student.id));
-	};
 
 	return (
 		<tr>
@@ -20,12 +11,7 @@ function StudentItem(props) {
 			<td>{email}</td>
 			<td className="text-center">
 				<button className="btn btn-sm btn-secondary rounded-0 me-2">Edit</button>
-				<button
-					className="btn btn-sm btn-secondary rounded-0"
-					onClick={handleShowModal}
-					showDeleteStudent={showDeleteStudent}
-					deleteStudent={deleteStudent}
-				>
+				<button className="btn btn-sm btn-secondary rounded-0" onClick={() => props.showModalDelete(props.student)}>
 					Delete
 				</button>
 			</td>

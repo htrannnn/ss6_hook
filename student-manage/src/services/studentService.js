@@ -35,3 +35,7 @@ export function deleteByName(name) {
 		}
 	}
 }
+
+export function searchByName(name) {
+	return studentList.filter((student) => student.name.includes(name));
+}

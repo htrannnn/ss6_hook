@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import StudentItem from "./StudentItem";
-import { getAllStudent } from "../services/studentService";
+import { getAllStudent, searchByName } from "../services/studentService";
 import AddStudent from "./AddStudent";
 import DeleteStudent from "./DeleteStudent";
 
@@ -8,14 +8,13 @@ function StudentList() {
 	const [studentList, setStudentList] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	//isLoading khởi tạo với giá trị mặc định là False
+	const [show, setShow] = useState(false);
+	const [selectedStudent, setSelectedStudent] = useState({});
 
 	useEffect(() => {
 		setStudentList(getAllStudent());
 	}, [isLoading]);
 	//effect chỉ chạy khi isLoading được cập nhật. Chạy: cập nhật lại danh sách getAllStudent khi isLoading được cập nhật
-
-	const [show, setShow] = useState(false);
-	const [selectedStudent, setSelectedStudent] = useState();
 
 	const handleIsLoading = () => {
 		setIsLoading((prevState) => !prevState);
@@ -26,17 +25,16 @@ function StudentList() {
 	const showModalDelete = (student) => {
 		setShow(true);
 		setSelectedStudent(student);
-		console.log(student);
 	};
 
 	const closeModal = () => {
 		setShow(false);
-		setSelectedStudent();
+		setSelectedStudent({});
 	};
 
-	const deleteStudent = (student) => {
-		console.log(student);
-		setStudentList((previousList) => previousList.filter((students) => students.id !== student.id));
+	const deleteStudent = () => {
+		setStudentList(studentList.filter((students) => students.id !== selectedStudent.id));
+		closeModal();
 	};
 
 	return (
@@ -46,7 +44,7 @@ function StudentList() {
 					<h1>Student List</h1>
 				</div>
 				<div className="card-body">
-					<AddStudent handleIsLoading={handleIsLoading} />
+					<AddStudent handleIsLoading={handleIsLoading} setStudentList={setStudentList} />
 					<table className="table table-striped table-secondary">
 						<thead>
 							<tr>
@@ -59,7 +57,7 @@ function StudentList() {
 						</thead>
 						<tbody>
 							{studentList.map((student) => (
-								<StudentItem key={student.id} student={student} showModalDelete={showModalDelete} />
+								<StudentItem key={student.id} student={student} showModalDelete={showModalDelete} searchByName={searchByName} />
 							))}
 						</tbody>
 					</table>
